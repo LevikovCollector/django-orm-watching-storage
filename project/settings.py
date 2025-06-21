@@ -1,5 +1,5 @@
 import os
-from environs import env
+from environs import env, EnvError
 
 env.read_env()
 DATABASES = {
@@ -17,11 +17,14 @@ INSTALLED_APPS = ['datacenter']
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG_STATUS')
+try:
+    DEBUG = env.bool('DEBUG_STATUS')
+except EnvError:
+    DEBUG = True
 
 ROOT_URLCONF = 'project.urls'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOST')
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

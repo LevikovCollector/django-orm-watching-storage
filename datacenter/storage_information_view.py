@@ -1,10 +1,7 @@
-from datetime import timedelta
-
-from datacenter.models import Passcard, get_duration, is_visit_long
 from datacenter.models import Visit
 from django.shortcuts import render
 
-
+from datacenter.visit_duration import get_duration, is_visit_long
 
 
 def storage_information_view(request):
