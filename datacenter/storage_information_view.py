@@ -1,7 +1,7 @@
 from datacenter.models import Visit
 from django.shortcuts import render
 
-from datacenter.visit_duration import get_duration, is_visit_long
+from datacenter.visit_duration import get_duration, is_visit_long, duration_format
 
 
 def storage_information_view(request):
@@ -13,7 +13,7 @@ def storage_information_view(request):
             {
                 'who_entered': visit.passcard.owner_name,
                 'entered_at': visit.entered_at,
-                'duration': get_duration(visit),
+                'duration': duration_format(get_duration(visit)),
                 'is_strange': is_visit_long(visit)
             }
         )

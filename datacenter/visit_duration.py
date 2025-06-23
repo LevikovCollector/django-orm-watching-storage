@@ -13,11 +13,9 @@ def get_duration(visit: Visit) -> timedelta:
     leaved_at_local = django.utils.timezone.localtime(visit.leaved_at)
     if visit.entered_at and visit.leaved_at:
         entered_at_local = django.utils.timezone.localtime(visit.entered_at)
-        delta = leaved_at_local - entered_at_local
-        duration = timedelta(days=delta.days, seconds=delta.seconds)
-        return duration
+        return leaved_at_local - entered_at_local
     else:
-        return timedelta(minutes=0)
+        return django.utils.timezone.now() - visit.entered_at
 
 
 def is_visit_long(visit: Visit, minutes: int = 60) -> bool:
@@ -31,3 +29,10 @@ def is_visit_long(visit: Visit, minutes: int = 60) -> bool:
 
     duration = get_duration(visit)
     return duration > timedelta(minutes=minutes)
+
+
+def duration_format(duration: timedelta):
+    total_seconds = int(duration.total_seconds())
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
