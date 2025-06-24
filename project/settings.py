@@ -20,14 +20,14 @@ SECRET_KEY = env('SECRET_KEY')
 try:
     DEBUG = env.bool('DEBUG_STATUS')
 except EnvError:
-    DEBUG = True
+    DEBUG = False
 
 ROOT_URLCONF = 'project.urls'
 
 try:
     ALLOWED_HOSTS = env.list('ALLOWED_HOST')
 except EnvError:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['*']
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
